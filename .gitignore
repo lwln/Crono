@@ -20,4 +20,5 @@ Desktop.ini
 ########################
 
 # Configuration
-config.php
+certificiate
+./database/*
