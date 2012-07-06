@@ -62,12 +62,15 @@ class Crono {
 			case 'about':
 				global $dAmnPHP, $config;
 				
-				$about  = '<b><sub>Project crono (Development)</b><br>';
-				$about .= 'Created by :devoxai: and :deviXeriox: <br>';
-				$about .= 'Owned by :dev' . $config['owner'] . ':';
+				$VER = 'Development version 0.01';
+				$NAME = 'Crono';
+				$CREATOR = ':devoxai: and :deviXeriox:';
+
+				$about  = '<b>Project Crono </b><sup>'.$VER.'</sup><br>';
+				$about .= '<sub><b>Author:</b> '.$CREATOR.'; <b>Owner</b> :dev'.$config['owner'].':;';
 				if (isset($args[1]) && $args[1] == 'uptime') {
 					global $start;
-					$about .= '<br> Crono has been online for: ' . timeify($start - time());
+					$about .= '<br>Crono has been online for: ' . timeify($start - time());
 				}
 				$dAmnPHP->say(deform($c), $about);
 				break;
