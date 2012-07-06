@@ -339,8 +339,8 @@ class dAmnPHP {
 				unset($parts[count($parts)-1]);
 				if($parts!==Null) return $parts;
 				return false;
-			} else { return array("disconnect\ne=socket closed\n\n");}
-		} else { return array("disconnect\ne=socket error\n\n"); }
+			} else { return die("Socket closed.. ");}
+		} else { return die("Socket Error"); }
 	
 	}
 
