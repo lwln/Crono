@@ -23,7 +23,7 @@ class Crono {
 				$room = ">>";
 				break;
 		}
-		echo date('D d M Y') . " " . $room . " " . $message . PHP_EOL;
+		echo date('D d M Y') . " " . $room . " " . htmlspecialchars_decode($message) . PHP_EOL;
 	}
 
 	function checkCommand($command, $c, $from, $args) {
@@ -300,8 +300,6 @@ class Crono {
 		foreach ($userinfo['autojoin'] as $room) {
 			$dAmnPHP->join(deform($room));
 		}
-		$dAmnPHP->join('chat:hislab');
-		$dAmnPHP->say('chat:hislab', 'I got connected. ^^;');
 		while ($running === true) {
 			// While we are running we may as well let dAmnHandler do the real work.
 			$this->bot_();
