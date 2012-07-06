@@ -124,14 +124,14 @@ class dAmnPHP {
 	
    			    function getCookie($username, $pass) {			// Method to get the cookie! Yeah! :D
 				global $botinfo, $clientinfo, $Crono;
-		$Crono->console( "Attempting to get Certificate.. ", "Core");
+		console( "Attempting to get Certificate.. ", "Core");
 		// Method to get the cookie! Yeah! :D
 		// Our first job is to open an SSL connection with our host.
 		$this->socket = fsockopen("ssl://www.deviantart.com", 443);
-		$Crono->console( "[Cookie] - Opened socket!", "Core");
+		console( "[Cookie] - Opened socket!", "Core");
 		// If we didn't manage that, we need to exit!
 		if($this->socket === false) {
-		$Crono->console( "Error: Please check your internet connection!", "Core");
+		console( "Error: Please check your internet connection!", "Core");
 		}
 		// Fill up the form payload
 		$POST = '&username='.urlencode($username);
@@ -190,7 +190,7 @@ class dAmnPHP {
 		global $dAmn, $running;
 		$running  = true;
 		$dAmn->cookie = $cookie;
-		$Crono->console( "Cookie: ".$cookie, "Connection"		);
+		console( "Cookie: ".$cookie, "Connection"		);
 	}
 		function send_headers($socket, $host, $url, $referer, $post=null, $cookies=array())
 	{

@@ -8,12 +8,12 @@ Though I though this was evident.. e.e
 include 'dAmnPHP.php';
 include 'Crono.php';
 include 'Handler.php';
-
+include 'functions.php';
 global $dAmnPHP, $Crono, $Handler;
 if(!function_exists('config')){
 function config() {
 global $Crono;
-$Crono->console('Configuration file for your bot!', 'config');
+console('Configuration file for your bot!', 'config');
 echo '** Bot Username: ';
 $Username = trim(fgets(STDIN));
 echo '** Bot Password: ';
@@ -30,17 +30,17 @@ return $Bot_information;
 }
 if (!file_exists('./database/botinfo')) {
 $Bot_information = config();
-$Crono->console( 'End results!', 'config' );
-$Crono->console( 'Username: '.$Bot_information['Username'], 'config' );
-$Crono->console( 'Password: '.$Bot_information['Password'], 'config' );
-$Crono->console( 'Trigger: '.$Bot_information['Trigger'], 'config' );
-$Crono->console( 'Homeroom(s): '. $Bot_information['Homerooms'], 'config' );
-$Crono->console( 'Owner: '. $Bot_information['Owner'], 'config' );
-$Crono->console( 'Is this correct? (Y/N) ', 'config' );
+console( 'End results!', 'config' );
+console( 'Username: '.$Bot_information['Username'], 'config' );
+console( 'Password: '.$Bot_information['Password'], 'config' );
+console( 'Trigger: '.$Bot_information['Trigger'], 'config' );
+console( 'Homeroom(s): '. $Bot_information['Homerooms'], 'config' );
+console( 'Owner: '. $Bot_information['Owner'], 'config' );
+console( 'Is this correct? (Y/N) ', 'config' );
 $Correct = trim(fgets(STDIN));
 if(strtolower($Correct)=='y'){
-$Crono->console( ' That\'s great to hear. :3 ', 'config' );
-$Crono->console( 'Lets save that information.. ', 'config');
+console( ' That\'s great to hear. :3 ', 'config' );
+console( 'Lets save that information.. ', 'config');
 $config = $Bot_information;
 save_config( 'botinfo' );
 } else {
