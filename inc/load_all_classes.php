@@ -30,6 +30,7 @@ return $Bot_information;
 }
 }
 if (!file_exists('./database/botinfo')) {
+config:
 $Bot_information = unserialize(config());
 console( 'End results!', 'config' );
 console( 'username: '.$Bot_information['username'], 'config' );
@@ -42,7 +43,7 @@ $Correct = trim(fgets(STDIN));
 if(strtolower($Correct)=='y'){
 console( ' That\'s great to hear. :3 ', 'config' );
 console( 'Lets save that information.. ', 'config');
-$config = $Bot_information;
+$config = serialize($Bot_information);
 save_config( 'botinfo' );
 } else {
 echo ' Dang';

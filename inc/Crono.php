@@ -269,22 +269,25 @@ class Crono {
 			global $dAmnPHP, $config;
 		load_config( 'botinfo' );
 		console("Lets attempt to get connected. ", "Connection");
-	
-		if (!file_exists("./inc/certificate")) {
-			$Cookie = $dAmnPHP->getCookie($config['username'], $config['password']);
-			global $dAmn;
-			$cookie = $Cookie = $dAmn->cookie;
-			console("Got Cookie: " . $Cookie . ".", "Core");
-			console("Stored Certificate! ", "Core");
-			$filename = "./inc/certificate";
-			$con      = fopen($filename, 'w');
-			fputs($con, $Cookie);
-			fclose($con);
-		} else {
-			$Cookie = @file_get_contents('./inc/certificate', TRUE);
-			
-			$running = true;
-			console("Stored Cookie: " . $Cookie, "Core");
+		$exists = file_exists('./inc/certificate');
+		if($exists) {
+			$contents = file_get_contents('./inc/certificate');
+			if(empty($contents)) {
+				$Cookie = $dAmnPHP->getCookie($config['username'], $config['password']);
+				global $dAmn;
+				$cookie = $Cookie = $dAmn->cookie;
+				console("Got Cookie: " . $Cookie . ".", "Core");
+				console("Stored Certificate! ", "Core");
+				$filename = "./inc/certificate";
+				$con      = fopen($filename, 'w');
+				fputs($con, $Cookie);
+				fclose($con);
+			} else {
+				$Cookie = @file_get_contents('./inc/certificate', TRUE);
+				
+				$running = true;
+				console("Stored Cookie: " . $Cookie, "Core");
+			}
 		}
 		$num     = 1;
 		// Lets get onto dAmn.
