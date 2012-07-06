@@ -7,7 +7,7 @@ Though I though this was evident.. e.e
 
 include 'dAmnPHP.php';
 include 'Crono.php';
-include 'Hander.php';
+include 'Handler.php';
 
 global $dAmnPHP, $Crono, $Handler;
 ?>

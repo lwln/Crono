@@ -23,7 +23,7 @@ class Crono {
 				$room = ">>";
 				break;
 		}
-		echo date('D d M Y') . " " . $room . " " . $message . "";
+		echo date('D d M Y') . " " . $room . " " . $message . PHP_EOL;
 	}
 
 	function checkCommand($command, $c, $from, $args) {
@@ -62,9 +62,14 @@ class Crono {
 
 			case 'set':
 				global $config, $dAmnPHP;
+				$config['bot']['test'] = 'bullshit';
+				save_config('bot');
+				break;
+
+			case 'get':
+				global $config, $dAmnPHP;
 				load_config('bot');
-				$test = $config['bot']['iXeriox']['username'];
-				$dAmnPHP->say(deform($c), "return: " . $test);
+				$dAmnPHP->say(deform($c), $config['bot']['test']);
 				break;
 
 			case 'about':
@@ -312,7 +317,7 @@ function load_config($name) {
 	$config = null;
 	if (file_exists('./database/' . $name)) {
 		$config = array();
-		$config = eval("return array(" . file_get_contents('./database/' . $name) . ");");
+		$config = unserialize(file_get_contents('./database/' . $name));
 	}
 	$Crono->console('Config loaded: ' . $name, "Core");
 }
@@ -321,14 +326,7 @@ function save_config($name) {
 	global $config, $Crono;
 	if (is_array($config)) {
 		$file = fopen('./database/' . $name, 'w');
-		$o    = var_export($config, true);
-		$o    = substr($o, 8, strlen($o) - 9);
-		$o    = substr($o, 0, strlen($o) - 1);
-		$o    = explode("\n", $o);
-		foreach ($o as $i => $l)
-			$o[$i] = substr($l, 2, strlen($l) - 2);
-		$o = implode("
-", $o);
+		$o    = serialize($config);
 		fwrite($file, $o);
 		fclose($file);
 		$Crono->console('Config saved: ' . $name, "Core");
