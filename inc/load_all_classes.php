@@ -14,28 +14,29 @@ if(!function_exists('config')){
 function config() {
 global $Crono;
 console('Configuration file for your bot!', 'config');
-echo '** Bot Username: ';
-$Username = trim(fgets(STDIN));
-echo '** Bot Password: ';
-$_Password = trim(fgets(STDIN));
-echo '** Bot Trigger: ';
-$Trigger = trim(fgets(STDIN));
+echo '** Bot username: ';
+$username = trim(fgets(STDIN));
+echo '** Bot password: ';
+$_password = trim(fgets(STDIN));
+echo '** Bot trigger: ';
+$trigger = trim(fgets(STDIN));
 echo '** Homeroom (Seperate with , For example "Room, Room2") '.PHP_EOL;
-$HomeRooms = trim(fgets(STDIN));
-echo '** Your DeviantART Username: ';
-$Owner = trim(fgets(STDIN));
-$Bot_information = array('Username' => $Username, 'Password' => $_Password, 'Trigger' => $Trigger, 'Homerooms' => $HomeRooms, 'Owner' => $Owner);
+$autojoin = trim(fgets(STDIN));
+echo '** Your DeviantART username: ';
+$owner = trim(fgets(STDIN));
+$Bot_information = array('username' => $username, 'password' => $_password, 'trigger' => $trigger, 'autojoin' => $autojoin, 'owner' => $owner);
+$Bot_information = serialize($Bot_information);
 return $Bot_information;
 }
 }
 if (!file_exists('./database/botinfo')) {
-$Bot_information = config();
+$Bot_information = unserialize(config());
 console( 'End results!', 'config' );
-console( 'Username: '.$Bot_information['Username'], 'config' );
-console( 'Password: '.$Bot_information['Password'], 'config' );
-console( 'Trigger: '.$Bot_information['Trigger'], 'config' );
-console( 'Homeroom(s): '. $Bot_information['Homerooms'], 'config' );
-console( 'Owner: '. $Bot_information['Owner'], 'config' );
+console( 'username: '.$Bot_information['username'], 'config' );
+console( 'password: '.$Bot_information['password'], 'config' );
+console( 'trigger: '.$Bot_information['trigger'], 'config' );
+console( 'Homeroom(s): '. $Bot_information['autojoin'], 'config' );
+console( 'owner: '. $Bot_information['owner'], 'config' );
 console( 'Is this correct? (Y/N) ', 'config' );
 $Correct = trim(fgets(STDIN));
 if(strtolower($Correct)=='y'){

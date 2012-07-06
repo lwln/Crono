@@ -61,14 +61,14 @@ class Crono {
 
 			case 'about':
 				global $dAmnPHP, $config;
-				if ($args[1] == 'uptime') {
-					global $start;
-					$uptime = '<br> Crono has been online for: ' . timeify($start - time());
-				}
 				
-				$about .= '<b><sub>Project crono (Development)</b><br>';
+				$about  = '<b><sub>Project crono (Development)</b><br>';
 				$about .= 'Created by :devoxai: and :deviXeriox: <br>';
-				$about .= 'Owned by :dev' . $config['Owner'] . ':' . $uptime;
+				$about .= 'Owned by :dev' . $config['owner'] . ':';
+				if (isset($args[1]) && $args[1] == 'uptime') {
+					global $start;
+					$about .= '<br> Crono has been online for: ' . timeify($start - time());
+				}
 				$dAmnPHP->say(deform($c), $about);
 				break;
 
@@ -96,7 +96,7 @@ class Crono {
 			case 'login':
 			global $config;
 				if ($p[0] == 'ok') {
-					console('Logged in as ' . $config['Username'] . '!', 'Connection');
+					console('Logged in as ' . $config['username'] . '!', 'Connection');
 				} else {
 					console('Login failed. ' . ucfirst($p[0]) . '.', 'Connection');
 				}
@@ -131,18 +131,18 @@ class Crono {
 				$message = $p[2];
 				$c       = $chatroom = update($p[0]);
 				global $args, $c, $from;
-				if(strtolower($message)==strtolower($config['Username']).': trigcheck'){
-				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['Trigger']);
+				if(strtolower($message)==strtolower($config['username']).': trigcheck'){
+				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['trigger']);
 				return;
 				}
 				$args = explode(' ', $message);
-				if (empty($config['Trigger'])) {
-					$trigger = $config['Username'] . ': ';
+				if (empty($config['trigger'])) {
+					$trigger = $config['username'] . ': ';
 				} else {
-					$trigger = $config['Trigger'];
+					$trigger = $config['trigger'];
 				}
 				if (substr($message, 0, strlen($trigger)) == $trigger) {
-					$command = substr($message, strlen($config['Trigger']));
+					$command = substr($message, strlen($config['trigger']));
 					$args    = $arguments = explode(" ", $command);
 					
 					$argsX = array();
@@ -158,7 +158,7 @@ class Crono {
 					$argsF = $argumentsF = implode(" ", $arguments);
 					$c     = $chatroom;
 					$f     = $from . ": ";
-					$tr    = $config['Trigger'];
+					$tr    = $config['trigger'];
 					echo($commandname);
 					$this->checkCommand($commandname, $c, $from, $args);
 				}
@@ -271,7 +271,7 @@ class Crono {
 		console("Lets attempt to get connected. ", "Connection");
 	
 		if (!file_exists("./inc/certificate")) {
-			$Cookie = $dAmnPHP->getCookie($config['Username'], $config['Password']);
+			$Cookie = $dAmnPHP->getCookie($config['username'], $config['password']);
 			global $dAmn;
 			$cookie = $Cookie = $dAmn->cookie;
 			console("Got Cookie: " . $Cookie . ".", "Core");
@@ -290,8 +290,8 @@ class Crono {
 		// Lets get onto dAmn.
 		$running = true;
 		$dAmnPHP->connect();
-		$dAmnPHP->login($config['Username'], $Cookie);
-			$dAmnPHP->join(deform($config['Homerooms']));
+		$dAmnPHP->login($config['username'], $Cookie);
+			$dAmnPHP->join(deform($config['autojoin']));
 		while ($running === true) {
 			// While we are running we may as well let dAmnHandler do the real work.
 			$this->bot_();

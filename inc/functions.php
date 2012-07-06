@@ -23,8 +23,7 @@ function load_config($name) {
 	global $config, $Crono;
 	$config = null;
 	if (file_exists('./database/' . $name)) {
-		$config = array();
-		$config = eval("return array(" . file_get_contents('./database/' . $name) . ");");
+		$config = unserialize(file_get_contents('./database/' . $name));
 	}
 }
 
@@ -32,14 +31,7 @@ function save_config($name) {
 	global $config, $Crono;
 	if (is_array($config)) {
 		$file = fopen('./database/' . $name, 'w');
-		$o    = var_export($config, true);
-		$o    = substr($o, 8, strlen($o) - 9);
-		$o    = substr($o, 0, strlen($o) - 1);
-		$o    = explode("\n", $o);
-		foreach ($o as $i => $l)
-			$o[$i] = substr($l, 2, strlen($l) - 2);
-		$o = implode("
-", $o);
+		$o    = serialize($config);
 		fwrite($file, $o);
 		fclose($file);
 		console('Config saved: ' . $name, "Core");
