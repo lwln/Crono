@@ -1,5 +1,5 @@
 <?PHP
-class handler{
+class handler {
 	function main() {
 	global $dAmn, $Crono, $running;
 
