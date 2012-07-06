@@ -33,28 +33,6 @@ class Crono {
 				}
 				break;
 
-			case 'restart':
-				global $dAmnPHP;
-				$handle = fopen('./tmp/restart', 'w');
-				fclose($handle);
-				$dAmnPHP->say(deform($c), "$from: restarting...");
-				$dAmnPHP->disconnect();
-				break;
-
-			case 'quit':
-				global $dAmnPHP;
-				$dAmnPHP->say(deform($c), "$from: quitting...");
-				$dAmnPHP->disconnect();
-				break;
-
-			case 'ping':
-				global $dAmnPHP, $ping_ts, $ping_c, $ping_from;
-				$ping_ts = microtime(true);
-				$ping_c = $c;
-				$ping_from = $from;
-				$dAmnPHP->say(deform($c), $from.': Ping?');
-				break;
-
 			case 'say':
 				global $dAmnPHP;
 				if (!isset($args[1])) {
@@ -160,13 +138,6 @@ class Crono {
 				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['trigger']);
 				return;
 				}
-				global $ping_ts, $ping_c, $ping_from;
-				if(strtolower($message) == strtolower($ping_from.': Ping?') && $from == $config['username']) {
-					$dAmnPHP->say(deform($ping_c), 'Ping time: '.round((microtime(true) - $ping_ts),5));
-					unset($ping_c);
-					unset($ping_ts);
-					unset($ping_from);
-				}
 				$args = explode(' ', $message);
 				if (empty($config['trigger'])) {
 					$trigger = $config['username'] . ': ';
@@ -242,7 +213,7 @@ class Crono {
 
 			case 'kicked':
 				global $dAmnPHP;
-				$log = '[' . update($p[0]) . '] ** You have been kicked by ' . $p[1] . ' * | Rejoining...';
+				$log = '[' . update($p[0]) . '] ** You have been kicked by ' . $p[1] . ' * | Rejoining..';
 				$dAmnPHP->join($p[0]);
 				if ($p[2] !== false)
 					$log .= ' ' . $p[2];
