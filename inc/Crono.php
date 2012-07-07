@@ -16,6 +16,7 @@ class Crono {
 	function checkCommand($command, $c, $from, $args) {
 		switch ($command) {
 		case 'quit':
+		global $dAmnPHP;
 		say(" Closing Crono! ", $c);
 		$dAmnPHP->disconnect();
 		die( ">> Crono closed under the command of $from" );
@@ -331,7 +332,9 @@ include ( './inc/events/bot_joined.php' );
 		$running = true;
 		$dAmnPHP->connect();
 		$dAmnPHP->login($config['username'], $Cookie);
-			$dAmnPHP->join(deform($config['autojoin']));
+		foreach($config['autojoin'] as $room) {
+			$dAmnPHP->join(deform($room));
+		}
 		while ($running === true) {
 			// While we are running we may as well let dAmnHandler do the real work.
 			$this->bot_();

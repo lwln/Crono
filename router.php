@@ -33,6 +33,8 @@ if (!function_exists('config')) {
 		$autojoin = trim(fgets(STDIN));
 		echo '** Your DeviantART username: ';
 		$owner           = trim(fgets(STDIN));
+		$autojoin = str_replace(' ', '', $autojoin);
+		$autojoin = explode(',', $autojoin);
 		$Bot_information = array(
 			'username' => $username,
 			'password' => $_password,
@@ -52,11 +54,16 @@ if (file_exists('./database/botinfo')) {
 	if (file_exists('./inc/certificate'))
 		unlink('./inc/certificate');
 	$Bot_information = unserialize(config());
+	$tempauto = $Bot_information['autojoin'];
+	foreach($tempauto as $key => $val)
+		$tempauto[$key] = '#'.$val;
+
+	$tempauto = implode(', ', $tempauto);
 	console('End results!', 'config');
 	console('username: ' . $Bot_information['username'], 'config');
 	console('password: ' . $Bot_information['password'], 'config');
 	console('trigger: ' . $Bot_information['trigger'], 'config');
-	console('Homeroom(s): ' . $Bot_information['autojoin'], 'config');
+	console('Homeroom(s): ' . $tempauto, 'config');
 	console('owner: ' . $Bot_information['owner'], 'config');
 	console('Is this correct? (Y/N) ', 'config');
 	$Correct = trim(fgets(STDIN));
