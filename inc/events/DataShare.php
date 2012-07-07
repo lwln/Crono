@@ -1,6 +1,5 @@
 <?php
 global $c, $config, $dAmnPHP, $from, $message, $functions;
-load_config('botinfo');
-console($c, $c);
+$botfile = xload_config('botinfo');
 $dAmnPHP->say($dAmnPHP->format_chat($c), $from);
 ?>

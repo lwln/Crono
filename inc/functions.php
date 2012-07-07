@@ -1,9 +1,11 @@
 <?PHP
-
+if(!function_exists('confirm_load_functions')){
 function confirm_load_functions() {
   console(" Memory check: ".ini_get("memory_limit"), "Core" );
   console("Loaded the functions. ", 'Core');
 }
+}
+if(!function_exists('console')){
 function console($message, $room, $addon = false) {
   if ($room != "Chat") {
     $addon = null;
@@ -21,6 +23,8 @@ function console($message, $room, $addon = false) {
   }
   echo date('D d M Y') . " " . $room . " " . htmlspecialchars_decode($message) . PHP_EOL;
 }
+}
+if(!function_exists('xload_config')){
 function xload_config($name) {
   global $config, $Crono;
   $config = null;
@@ -30,6 +34,8 @@ function xload_config($name) {
     return 'False configuration';
   }
 }
+}
+if(!function_exists('load_config')){
 function load_config($name) {
   global $config, $Crono;
   $config = null;
@@ -39,6 +45,8 @@ function load_config($name) {
     return 'False configuration';
   }
 }
+}
+if(!function_exists('save_config')){
 function save_config($name) {
   global $config, $Crono;
   if (is_array($config)) {
@@ -49,7 +57,8 @@ function save_config($name) {
     console('Config saved: ' . $name, "Core");
   }
 }
-
+}
+if(!function_exists('deform')){
 function deform($chatname) {
   if ($chatname[0] == '#') {
     $chatname = str_replace('#', 'chat:', $chatname);
@@ -58,16 +67,20 @@ function deform($chatname) {
   }
   return $chatname;
 }
-
+}
+if(!function_exists('update')){
 function update($chatname) {
   $chatname = str_replace('chat:', '#', $chatname);
   return $chatname;
 }
+}
+if(!function_exists('say')){
 function say($message, $room) {
   global $dAmnPHP, $from;
   $dAmnPHP->say(deform($room), $message);
 }
-
+}
+if(!function_exists('timeify')){
 function timeify($sec) {
   $sec          = str_replace('-', '', $sec);
   $returnstring = " ";
@@ -84,5 +97,6 @@ function timeify($sec) {
   $returnstring .= (($days || $hours || $minutes) && $seconds) ? " and " : " ";
   $returnstring .= ($seconds) ? (($seconds == 1) ? "1 second" : "$seconds seconds") : "";
   return ($returnstring);
+}
 }
 ?>

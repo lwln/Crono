@@ -307,6 +307,11 @@ include ( './inc/events/bot_joined.php' );
 
 	function load_userinfo() {
 		global $dAmnPHP, $config;
+		$lol = null;
+		$lol = file_exists('./database/botinfo');
+		if(!$lol){
+		console(' There was an error while loading the bot configuration!', 'Core');
+		}
 		load_config( 'botinfo' );
 		console("Lets attempt to get connected. ", "Connection");
 		$exists = file_exists('./inc/certificate');
