@@ -436,6 +436,7 @@ function sort_dAmn_packet($packet) {
 		case 'login':
 			$data['event'] = 'login';
 			$data['p'][0] = $packet['args']['e'];
+
 			break;
 		case 'join':
 		case 'part':

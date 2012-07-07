@@ -15,6 +15,30 @@ class Crono {
 
 	function checkCommand($command, $c, $from, $args) {
 		switch ($command) {
+		case 'quit':
+		say(" Closing Crono! ", $c);
+		$dAmnPHP->disconnect();
+		die( ">> Crono closed under the command of $from" );
+		break;
+			case 'restart':
+			global $dAmnPHP, $config;
+    $startn = microtime(true);
+    $config = array(
+    'timer' => $startn,
+    'room' => $c,
+    'ish' => true);
+    save_config( 'restarting' );
+    say("$from: Restarting..", $c);
+    $dAmnPHP->disconnect();
+    exec( 'exit' ).exec( 'C:\php\php.exe router.php' );
+		break;
+			case 'e':
+			global $c, $argsF; 
+				ob_start();
+			eval($argsF);
+			$eval_str = ob_get_contents();
+			say( 'return: '.$eval_str, $c );
+			break;
 			case 'join':
 				global $from, $dAmnPHP;
 				if (!isset($args[1])) {
@@ -101,6 +125,10 @@ class Crono {
 				if ($p[0] == 'ok') {
 					console('Logged in as ' . $config['username'] . '!', 'Connection');
 				} else {
+				if(ucfirst($p[0])=='Authentication failed'){
+				unlink( 'inc/certificate' );
+				$this->get_userinfo();
+				}
 					console('Login failed. ' . ucfirst($p[0]) . '.', 'Connection');
 				}
 				break;
@@ -115,9 +143,11 @@ class Crono {
 				}
 				$log .= ' for ' . ($save != false ? $save : update($p[0]));
 				if ($p[1] != 'ok')
+	
 					$log .= ' [' . $p[1] . ']';
 				if ($p[1] == 'ok' && $p[2] != false)
 					$log .= ' [' . $p[2] . ']';
+include ( './inc/events/bot_joined.php' );
 				console($log, "Core");
 				break;
 
@@ -133,7 +163,7 @@ class Crono {
 				$from    = $p[1];
 				$message = $p[2];
 				$c       = $chatroom = update($p[0]);
-				global $args, $c, $from;
+				global $args, $argsF, $c, $from;
 				if(strtolower($message)==strtolower($config['username']).': trigcheck'){
 				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['trigger']);
 				return;
