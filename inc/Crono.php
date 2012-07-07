@@ -161,13 +161,12 @@ include ( './inc/events/bot_joined.php' );
 
 			case 'recv_msg':
 			case 'recv_action':
-				global $dAmnPHP, $config, $from, $message;
+				global $dAmnPHP, $config, $from, $message, $c, $argsF;
 				load_config( 'botinfo' );
 				$from    = $p[1];
 				$message = $p[2];
 				$c       = $chatroom = update($p[0]);
-				global $args, $argsF, $c, $from;
-				include('./inc/events/DataShare.php');
+				
 				if(strtolower($message)==strtolower($config['username']).': trigcheck'){
 				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['trigger']);
 				return;
@@ -198,7 +197,7 @@ include ( './inc/events/bot_joined.php' );
 					$tr    = $config['trigger'];
 					$this->checkCommand($commandname, $c, $from, $args);
 				}
-				
+				include('./inc/events/DataShare.php');
 				console('[' . update($p[0]) . '] ' . (substr($data['event'], 5) == 'msg' ? '<' . $p[1] . '>' : '* ' . parse_tablumps($p[1])) . ' ' . $p[2], 'Core');
 				break;
 

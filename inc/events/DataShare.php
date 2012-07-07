@@ -1,5 +1,6 @@
 <?php
-global $c, $config, $dAmnPHP, $from, $message, $functions;
+global $from, $c;
 $botfile = xload_config('botinfo');
-$dAmnPHP->say($dAmnPHP->format_chat($c), $from);
+if(strtolower($from)==strtolower($botfile['username'])) return;
+say( $from, $c);
 ?>
