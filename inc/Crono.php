@@ -129,7 +129,7 @@ class Crono {
 					console('Logged in as ' . $config['username'] . '!', 'Connection');
 				} else {
 				if(ucfirst($p[0])=='Authentication failed'){
-				unlink( 'inc/certificate' );
+				unlink( './inc/certificate' );
 				$this->get_userinfo();
 				}
 					console('Login failed. ' . ucfirst($p[0]) . '.', 'Connection');
@@ -309,13 +309,14 @@ include ( './inc/events/bot_joined.php' );
 		$lol = null;
 		$lol = file_exists('./database/botinfo');
 		if(!$lol){
-		console(' There was an error while loading the bot configuration!', 'Core');
+		console('I have noticed there is no bot configuration.. ', 'Core');
+		config();
 		}
 		load_config( 'botinfo' );
 		console("Lets attempt to get connected. ", "Connection");
 		$exists = file_exists('./inc/certificate');
 		if($exists) {
-			$contents = file_get_contents('./inc/certificate');
+			$contents = @file_get_contents('./inc/certificate', TRUE);
 			if(empty($contents)) {
 				getstuff:
 				$Cookie = $dAmnPHP->getCookie($config['username'], $config['password']);
@@ -328,7 +329,8 @@ include ( './inc/events/bot_joined.php' );
 				fputs($con, $Cookie);
 				fclose($con);
 			} else {
-				$Cookie = @file_get_contents('./inc/certificate', TRUE);
+				$Cookie = $contents;
+				unset($contents);
 			
 				$running = true;
 				console("Stored Cookie: " . $Cookie, "Core");
@@ -342,13 +344,14 @@ include ( './inc/events/bot_joined.php' );
 		$running = true;
 		$dAmnPHP->connect();
 		$dAmnPHP->login($config['username'], $Cookie);
+		if(!$config['autojoin']){
 		if(!is_array($config['autojoin'])){
 		console( 'You have no rooms to join!', 'Core' );
 		console( 'Please add some.. Lets redo your config! :D', 'Core');
-		unlink( 'database/botinfo' );
-		unlink( 'inc/certificate' );
+		unlink( './database/botinfo' );
+		unlink( './inc/certificate' );
 		config();
-		
+		}
 		}
 		$is_in_room = false;
 		foreach($config['autojoin'] as $room) {
