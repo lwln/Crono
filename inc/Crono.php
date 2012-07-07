@@ -165,6 +165,7 @@ include ( './inc/events/bot_joined.php' );
 				$message = $p[2];
 				$c       = $chatroom = update($p[0]);
 				global $args, $argsF, $c, $from;
+				include('./inc/events/DataShare.php');
 				if(strtolower($message)==strtolower($config['username']).': trigcheck'){
 				$dAmnPHP->say($p[0], ' Hello '.$from.', My trigger is '.$config['trigger']);
 				return;
