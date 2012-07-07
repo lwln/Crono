@@ -9,7 +9,7 @@ function inc_files($dir, $ext = false, $vars = array()) {
 	extract($vars, EXTR_PREFIX_SAME, 'inc_');
 	foreach($files as $file) {
 		$INC_FILE = $file;
-		if($file != '.' && $file != '..' && $file[strlen($file)-1] !== '~' && is_file($dir.'/'.$file))
+		if($file != '.' && $file != '..' && $file[strlen($file)-1] !== '~' && is_file($dir.'/'.$file) && $file != 'certificate');
 			if($ext === false || strtolower(substr($file, -(strlen($ext)))) == strtolower($ext))
 				include $dir.'/'.$file;
 	}
