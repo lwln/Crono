@@ -1,5 +1,7 @@
 <?PHP
+
 function confirm_load_functions() {
+  console(" Memory check: ".ini_get("memory_limit"), "Core" );
   console("Loaded the functions. ", 'Core');
 }
 function console($message, $room, $addon = false) {

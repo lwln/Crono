@@ -75,7 +75,6 @@ if (file_exists('./database/botinfo')) {
 	} else {
 		echo ' Dang';
 	}
-	system('pause');
 }
 
 $start = time();

@@ -34,11 +34,13 @@ class Crono {
     exec( 'exit' ).exec( 'C:\php\php.exe router.php' );
 		break;
 			case 'e':
-			global $c, $argsF; 
+			global $c, $argsF;
+
+			say( 'Return: <code>'.$argsF.'</code>', $c );			
 				ob_start();
 			eval($argsF);
 			$eval_str = ob_get_contents();
-			say( 'return: '.$eval_str, $c );
+			echo $eval_str;
 			break;
 			case 'join':
 				global $from, $dAmnPHP;
@@ -194,7 +196,6 @@ include ( './inc/events/bot_joined.php' );
 					$c     = $chatroom;
 					$f     = $from . ": ";
 					$tr    = $config['trigger'];
-					echo($commandname);
 					$this->checkCommand($commandname, $c, $from, $args);
 				}
 				
@@ -203,6 +204,10 @@ include ( './inc/events/bot_joined.php' );
 
 			case 'recv_join':
 			case 'recv_part':
+				global $join_part;
+				$join_part = $data['event'];
+				$join_part = str_replace('left', 'recv_part', $join_part);
+				$join_part = str_replace('joined', 'recv_join', $join_part);
 				$log = '[' . update($p[0]) . '] ** ' . $p[1] . ' has ' . (substr($data['event'], 5) == 'join' ? 'joined' : 'left') . (($data['event'] == 'recv_part' && $p[2] != false) ? ' [' . $p[2] . ']' : '');
 				console($log, "Core");
 				break;
@@ -333,8 +338,22 @@ include ( './inc/events/bot_joined.php' );
 		$running = true;
 		$dAmnPHP->connect();
 		$dAmnPHP->login($config['username'], $Cookie);
+		if(!is_array($config['autojoin'])){
+		console( 'You have no rooms to join!', 'Core' );
+		console( 'Please add some.. Lets redo your config! :D', 'Core');
+		unlink( 'database/botinfo' );
+		unlink( 'inc/certificate' );
+		config();
+		
+		}
+		$is_in_room = false;
 		foreach($config['autojoin'] as $room) {
+			$is_in_room .= $room.', ';
 			$dAmnPHP->join(deform($room));
+		}
+		if(!$is_in_room){
+		$running = false;
+		die( ' Couldn\'nt join a room! ');
 		}
 		while ($running === true) {
 			// While we are running we may as well let dAmnHandler do the real work.
