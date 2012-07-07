@@ -32,3 +32,4 @@ class handler {
 
 }
 $Handler = new Handler;
+?>
