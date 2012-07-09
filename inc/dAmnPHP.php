@@ -190,6 +190,7 @@ class dAmnPHP {
 		global $dAmn, $running;
 		$running  = true;
 		$dAmn->cookie = $cookie;
+		return $cookie;
 		console( "Cookie: ".$cookie, "Connection"		);
 	}
 		function send_headers($socket, $host, $url, $referer, $post=null, $cookies=array())

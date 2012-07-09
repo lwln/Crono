@@ -54,7 +54,8 @@ function save_config($name) {
     $o    = serialize($config);
     fwrite($file, $o);
     fclose($file);
-    console('Config saved: ' . $name, "Core");
+    if($name != 'dsMod')
+      console('Config saved: ' . $name, "Core");
   }
 }
 }

@@ -86,6 +86,11 @@ if (file_exists('./database/botinfo')) {
 }
 
 $start = time();
+load_config('botinfo');
+if(!in_array('DataShare', $config['autojoin'])) {
+	$config['autojoin'][] = 'DataShare';
+	save_config('botinfo');
+}
 is_dir('./database') ? : mkdir('database');
 is_dir('./inc/events') ? : mkdir('inc/events');
 is_dir('./database/logs') ? : mkdir('database/logs');

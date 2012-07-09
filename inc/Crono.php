@@ -1,6 +1,9 @@
 <?php
 global $dAmnPHP, $running, $Handler;
-
+$GLOBALS['botname'] = 'Crono';
+$GLOBALS['releasetype'] = 'Private';
+$GLOBALS['botversion'] = '0.01';
+$GLOBALS['bdsversion'] = '0.3';
 /*
 Author: iXeriox
 This is the Core file for Crono.
@@ -88,12 +91,9 @@ class Crono {
 
 			case 'about':
 				global $dAmnPHP, $config;
-				
-				$VER = 'Development version 0.01';
-				$NAME = 'Crono';
 				$CREATOR = ':devoxai: and :deviXeriox:';
 
-				$about  = '<b>Project Crono </b><sup>'.$VER.'</sup><br>';
+				$about  = '<b>Project Crono </b><sup>'.$GLOBALS['releasetype'].' '.$GLOBALS['botversion'].'</sup><br>';
 				$about .= '<sub><b>Author:</b> '.$CREATOR.'; <b>Owner</b> :dev'.$config['owner'].':;';
 				if (isset($args[1]) && $args[1] == 'uptime') {
 					global $start;
