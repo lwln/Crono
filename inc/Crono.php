@@ -37,22 +37,27 @@ class Crono {
     exec( 'exit' ).exec( 'C:\php\php.exe router.php' );
 		break;
 			case 'e':
-			global $c, $argsF;
+			case 'eval':
+				global $c, $argsF;
 
-			say( 'Return: <code>'.$argsF.'</code>', $c );			
-				ob_start();
-			eval($argsF);
-			$eval_str = ob_get_contents();
-			echo $eval_str;
-			break;
-			case 'join':
-				global $from, $dAmnPHP;
-				if (!isset($args[1])) {
-					$dAmnPHP->say(deform($c), "$from: please state a room you want me to join! ");
-				} else {
-					$dAmnPHP->join(deform($args[1]));
-				}
+				say( 'Return: <code>'.$argsF.'</code>', $c );			
+				$e = eval($argsF);
+				if(!empty($e) && $e !== false)
+					say('Code returned:<bcode>'.var_export($e,true), $c);
+					break;
+				if($e === false)
+					say('Code returned false! Make sure your input is correct!', $c);
+					break;
 				break;
+
+				case 'join':
+					global $from, $dAmnPHP;
+					if (!isset($args[1])) {
+						$dAmnPHP->say("$from: please state a room you want me to join! ");
+					} else {
+						$dAmnPHP->join(deform($args[1]));
+					}
+					break;
 
 			case 'part':
 				global $from, $dAmnPHP;

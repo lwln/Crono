@@ -34,7 +34,7 @@ if(is_array($DataShare)) {
 				$botowner = $info[3];
 				$trigger = $info[4];
 				load_config('dsMod');
-				$config['dsMod'][][$userz] = array(
+				$config['dsMod'][$userz] = array(
 					'requestedBy'	=> $from,
 					'owner'		=> $botowner,
 					'trigger'	=> $trigger,
