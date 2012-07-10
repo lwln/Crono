@@ -2,7 +2,7 @@
 global $dAmnPHP, $running, $Handler;
 $GLOBALS['botname'] = 'Crono';
 $GLOBALS['releasetype'] = 'Private';
-$GLOBALS['botversion'] = '0.01';
+$GLOBALS['botversion'] = '0.1';
 $GLOBALS['bdsversion'] = '0.3';
 /*
 Author: iXeriox
