@@ -1,7 +1,8 @@
 <?php
 global $from, $c, $message, $config, $dAmnPHP;
 $botfile = xload_config('botinfo');
-$config['dsMod'] = array();
+load_config('dsMod');
+if(!is_array($config['dsMod'])) $config['dsMod'] = array();
 save_config('dsMod');
 $DataShare = xload_config( 'dsMod' );
 if(!is_array($botfile)) return;
