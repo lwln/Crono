@@ -3,25 +3,11 @@
 global $start;
 include( './inc/functions.php');
 confirm_load_functions();
+if(!is_dir('./database')){ mkdir( './database' ); }
 function inc_files($dir, $ext = false, $vars = array()) {
 	if(strstr($dir, 'certificate')) return;
-	$files = scandir($dir);
-	unset($files[0], $files[1]);
-	global $INC_FILE, $INC_DIR; // I don't like using globals, no in the slightest, but sometimes you do need them.
-	$INC_DIR = $dir;
-	extract($vars, EXTR_PREFIX_SAME, 'inc_');
-	foreach($files as $file) {
-		if(strtolower($file) != 'functions.php' && $file != '.' && $file != '..' && $file[strlen($file)-1] !== '~' && is_file($dir.'/'.$file) && $file != 'certificate' && !is_dir($file));
-			if($ext === false || strtolower(substr($file, -(strlen($ext)))) == strtolower($ext))
-				if(!strstr($file, '.php')){
-	inc_files($dir.'/'.$file);
-	} else {
-			include $dir.'/'.$file;
-						$INC_FILE = $file;
+	$file = scandir( $dir
 	}
-	}
-	unset($GLOBALS['INC_DIR']); unset($GLOBALS['INC_FILE']);
-}
 
 inc_files('./inc');
 
