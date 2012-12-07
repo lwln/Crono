@@ -6,7 +6,20 @@ confirm_load_functions();
 if(!is_dir('./database')){ mkdir( './database' ); }
 function inc_files($dir, $ext = false, $vars = array()) {
 	if(strstr($dir, 'certificate')) return;
-	$file = scandir( $dir
+	$file = scandir( $dir );
+	unset($file[0], $file[1]);
+	foreach( $file as $f => $array ){
+	if(strstr($file[$f], '.php')){
+	console( 'File: '.$file[$f].' was found and loaded. ', 'Core' );
+	} else {
+	if(is_dir($dir.'/'.$file[$f])){
+	console( 'Directory: '.$file[$f].' detected.. Scanning..', 'Core' );
+	inc_files( $dir.'/'.$file[$f] );
+	} else {
+	console( 'Error: '.$file[$f].' could not be loaded. ', 'Core' );
+	}
+	}
+	}
 	}
 
 inc_files('./inc');
